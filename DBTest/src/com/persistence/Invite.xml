@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Invite">
+	
+    
+    
+	
+	<resultMap id="result" type="invite">
+        <result property="event_id" column="inviteID"/>
+        <result property="event_name" column="eventname"/>
+        <result property="street_name" column="streetname"/>
+         <result property="city_name" column="cityname"/>
+          <result property="zipcode" column="zipcode"/>
+           <result property="event_type" column="eventtype"/>
+            <result property="event_date" column="eventdate"/>
+             <result property="rsvp_date" column="rsvpdate"/>
+    </resultMap>
+	
+	<select id="getAllInvite" resultMap="result">  
+		SELECT * FROM testxan.invite; 
+	</select>
+	
+	<select id="selectById" parameterType="Invite" resultMap="result">
+        SELECT * FROM testxan.invite WHERE inviteID = #{event_id}
+    </select>
+    
+	<insert id="saveInvite" parameterType="invite">
+		insert into testxan.invite
+(eventname,streetname,cityname,zipcode,eventtype,eventdate,rsvpdate) 
+values(#{event_name},#{street_name},#{city_name},#{zipcode},#{event_type},#{event_date},#{rsvp_date})
+
+	</insert>
+	
+	<update id="updateInvite" parameterType="invite"> 
+  		UPDATE invite
+  		SET
+  			eventname=#{event_name},
+  			streetname=#{street_name},
+  			cityname=#{city_name},
+  			zipcode=#{zipcode},
+  			eventtype=#{event_type},
+  			eventdate=#{event_date},
+  			rsvpdate=#{rsvp_date}
+  		where inviteID = #{event_id} 
+	</update>
+	
+	<delete id="deleteInvite" parameterType="int">
+    	DELETE FROM invite
+    	WHERE inviteId = #{event_id}
+       </delete>
+       
+	<!-- To call stored procedure. -->
+<select id="getInviteById" parameterMap="inviteMap" resultMap="result" statementType="CALLABLE">
+    { CALL getInviteById(#{event_id, mode=IN, jdbcType=INTEGER})}
+</select>
+<parameterMap type="invite" id="inviteMap">
+   <parameter property="event_id" jdbcType="INTEGER" javaType="java.lang.Integer" mode="IN"/>
+</parameterMap>
+	
+
+</mapper>

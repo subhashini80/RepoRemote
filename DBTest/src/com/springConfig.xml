@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+<configuration>
+    <typeAliases>
+        <typeAlias alias="invite" type="com.domain.Invite"/>        
+    </typeAliases>
+ 
+    <environments default="development">
+        <environment id="development">
+          <transactionManager type="JDBC"/>
+            <!--  connecting to Cloud SQL -->
+            <dataSource type="POOLED">
+                 <property name="driver" value="com.mysql.jdbc.GoogleDriver"/>
+                <property name="url" value="jdbc:google:mysql://project-xanadu-2014:genesis1/testxan"/>
+                <property name="username" value="root"/>
+                <property name="password" value=""/>
+            </dataSource>
+             <!-- connecting to Local MySql 
+              <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/testxan"/>
+                <property name="username" value="root"/>
+                <property name="password" value=""/>
+            </dataSource> -->
+       </environment>
+      
+    </environments>
+ 
+    <mappers>
+       <mapper resource="com/persistence/Invite.xml"/>
+    </mappers>
+</configuration>
